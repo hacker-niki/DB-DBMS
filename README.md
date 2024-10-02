@@ -60,6 +60,9 @@
 - **PromoCode**
   - `promoId`: INT FOREIGN KEY REFERENCES Order(orderId)
   - `pizzaId`: INT FOREIGN KEY REFERENCES Ingredient(ingredientId)
+  - `description`: STRING, NOT NULL
+  - `startDate`: DATETIME, NOT NULL
+  - `endDate`: DATETIME, NOT NULL
 
 -----
 
@@ -73,7 +76,14 @@
   - `IngredientId`: INT NOT NULL AUTO_INCREMENT PRIMARY KEY
   - `name`: STRING, NOT NULL
   - `price`: DECIMAL(5,2), NOT NULL
- 
+
+
+- **Payment**
+   - `PaymentId`: UUID (PK)
+   - `OrderId`: UUID (FK), NOT NULL
+   - `amount`: DECIMAL, NOT NULL
+   - `paymentDate`: DATETIME, NOT NULL
+   - `method`: ENUM("credit_card", "paypal", "cash") NOT NULL
     
 ### Ненормализованная схема БД: 
 
