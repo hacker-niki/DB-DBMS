@@ -25,11 +25,11 @@
   - `roleId`: INT FOREIGN KEY REFERENCES Role(roleId)
 
 - **Employee**
-  - `EmployeeId`: INT NOT NULL AUTO_INCREMENT PRIMARY KEY
-  - `UserId`: INT FOREIGN KEY REFERENCES User(UserId)
-  - `last_name`: STRING
-  - `phone_number`: VARCHAR(12)
-  - `first_name`: STRING
+  - `employeeId`: INT NOT NULL AUTO_INCREMENT PRIMARY KEY
+  - `userId`: INT FOREIGN KEY REFERENCES User(UserId)
+  - `lastName`: STRING
+  - `phoneNumber`: VARCHAR(12)
+  - `firstName`: STRING
   - `about`: STRING
 
 - **Role**
@@ -40,16 +40,17 @@
 
 - **Order**
   - `orderId`: INT NOT NULL AUTO_INCREMENT PRIMARY KEY
-  - `customerId`: INT FOREIGN KEY REFERENCES User(UserId)
+  - `customerId`: INT FOREIGN KEY REFERENCES User(userId)
   - `date`: DATEFIELD, NOT NULL
-  - `pizzaId`: INT FOREIGN KEY REFERENCES Pizza(PizzaId)
+  - `pizzaId`: INT FOREIGN KEY REFERENCES Pizza(pizzaId)
+  - `souceId`: INT FOREIGN KEY REFERENCES Sauce(sauceId)
   - `quantity`: DECIMAL(5,2), NOT NULL
   - `isPaid`: BOOLEAN, DEFAULT FALSE, NOT NULL
 
 - **Review**
   - `ReviewId`: INT NOT NULL AUTO_INCREMENT PRIMARY KEY
-  - `pizzaId`: INT FOREIGN KEY REFERENCES Pizza(PizzaId)
-  - `userId`: INT FOREIGN KEY REFERENCES User(UserId)
+  - `pizzaId`: INT FOREIGN KEY REFERENCES Pizza(pizzaId)
+  - `userId`: INT FOREIGN KEY REFERENCES User(pserId)
   - `rating`: INT CHECK (rating >= 1 AND rating <= 5)
   - `comment`: STRING, NULL
 
@@ -64,6 +65,11 @@
   - `startDate`: DATETIME, NOT NULL
   - `endDate`: DATETIME, NOT NULL
 
+- **Sauce**
+  - `souceId`: INT NOT NULL AUTO_INCREMENT PRIMARY KEY
+  - `name`: VARCHAR(20) NOT NULL
+  - `description`: TEXT
+    
 -----
 
 - **Pizza**
@@ -79,9 +85,9 @@
 
 
 - **Payment**
-   - `PaymentId`: UUID (PK)
-   - `OrderId`: UUID (FK), NOT NULL
-   - `amount`: DECIMAL, NOT NULL
+   - `PaymentId`: INT NOT NULL AUTO_INCREMENT PRIMARY KEY
+   - `OrderId`: INT FOREIGN KEY NOT NULL REFERENCES Order(orderId)
+   - `amount`: DECIMAL(5, 2), NOT NULL
    - `paymentDate`: DATETIME, NOT NULL
    - `method`: ENUM("credit_card", "paypal", "cash") NOT NULL
     
