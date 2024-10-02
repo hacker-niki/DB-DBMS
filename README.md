@@ -17,53 +17,64 @@
 ### Сущности базы данных
 
 - **User**
-  - `UserId`: INT NOT NULL AUTO_INCREMENT (PK)
+  - `userId`: INT NOT NULL AUTO_INCREMENT PRIMARY KEY
   - `username`: VARCHAR(15), NOT NULL
   - `email`: STRING, NOT NULL
   - `password`: BINARY(32) NOT NULL
   - `registerDate`: DATETIME, NOT NULL
+  - `roleId`: INT FOREIGN KEY REFERENCES Role(roleId)
+
+- **Employee**
+  - `EmployeeId`: INT NOT NULL AUTO_INCREMENT PRIMARY KEY
+  - `UserId`: INT FOREIGN KEY REFERENCES User(UserId)
+  - `last_name`: STRING
+  - `phone_number`: VARCHAR(12)
+  - `first_name`: STRING
+  - `about`: STRING
 
 - **Role**
-  - `RoleId`: INT (PK)
+  - `roleId`: INT NOT NULL AUTO_INCREMENT PRIMARY KEY
   - `role`: ENUM("customer", "admin", "employee") NOT NULL
-  - `UserId`: UUID (FK)
 
 ------
 
 - **Order**
-  - `OrderId`: UUID (PK)
-  - `CustomerId`: UUID (FK), NOT NULL
+  - `orderId`: INT NOT NULL AUTO_INCREMENT PRIMARY KEY
+  - `customerId`: INT FOREIGN KEY REFERENCES User(UserId)
   - `date`: DATEFIELD, NOT NULL
-  - `total_price`: DECIMAL, NOT NULL
-  - `is_paid`: BOOLEAN, DEFAULT FALSE
+  - `pizzaId`: INT FOREIGN KEY REFERENCES Pizza(PizzaId)
+  - `quantity`: DECIMAL(5,2), NOT NULL
+  - `isPaid`: BOOLEAN, DEFAULT FALSE, NOT NULL
 
 - **Review**
-  - `ReviewId`: INT (PK)
-  - `PizzaId`: INT (FK)
-  - `UserId`: UUID (FK)
+  - `ReviewId`: INT NOT NULL AUTO_INCREMENT PRIMARY KEY
+  - `pizzaId`: INT FOREIGN KEY REFERENCES Pizza(PizzaId)
+  - `userId`: INT FOREIGN KEY REFERENCES User(UserId)
   - `rating`: INT CHECK (rating >= 1 AND rating <= 5)
   - `comment`: STRING, NULL
 
+- **OrderIngredient**
+  - `orderId`: INT FOREIGN KEY REFERENCES Order(orderId)
+  - `ingredientId`: INT FOREIGN KEY REFERENCES Ingredient(ingredientId)
+
+- **PromoCode**
+  - `promoId`: INT FOREIGN KEY REFERENCES Order(orderId)
+  - `pizzaId`: INT FOREIGN KEY REFERENCES Ingredient(ingredientId)
+
 -----
 
-- **Employee**
-  - `EmployeeId`: INT (PK)
-  - `UserId`: UUID (FK)
-  - `last_name`: STRING
-  - `phone_number`: VARCHAR(12)
-  - `first_name`: STRING
-  - `post`: STRING
-
 - **Pizza**
-  - `PizzaId`: PK
+  - `PizzaId`: INT NOT NULL AUTO_INCREMENT PRIMARY KEY
   - `name`: VARCHAR(30), NOT NULL
   - `ingredients`: STRING, NOT NULL
   - `price`: DECIMAL, NOT NULL
 
 - **Ingredient**
-  - `IngredientId`: PK
+  - `IngredientId`: INT NOT NULL AUTO_INCREMENT PRIMARY KEY
   - `name`: STRING, NOT NULL
-
+  - `price`: DECIMAL(5,2), NOT NULL
+ 
+    
 ### Ненормализованная схема БД: 
 
 ---
