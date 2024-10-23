@@ -91,7 +91,7 @@
    - `paymentDate`: DATETIME, NOT NULL
    - `method`: ENUM("credit_card", "paypal", "cash") NOT NULL
     
-### Ненормализованная схема БД: 
+### Нормализованная схема БД: 
 
 ![alt text](./image.png)
 
