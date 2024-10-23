@@ -93,7 +93,7 @@
     
 ### Ненормализованная схема БД: 
 
-![Scheme](./DM.drawio.svg)
+![alt text](./image.png)
 
 
 ---
